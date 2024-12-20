@@ -1,0 +1,675 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 7
+Server version: 5.5.16 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2011, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> connect cvr
+Connection id:    8
+Current database: cvr
+
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show tables;
++---------------+
+| Tables_in_cvr |
++---------------+
+| student       |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student values(1,'navya',90,'hyderabad',900765234,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(2,'piyush',70,'vikarabad',900762314,'male');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(3,'aayush',99,'hyderabad',900762897,'male');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(4,'prakriti',85,'mumbai',900767647,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(5,'ruchi',100,'hyderabad',900789227,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(6,'sahiti',99,'delhi',900789217,'others');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(7,'vani',91,'mizoram',900788908,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(8,'bhavani',62,'pune',900988908,'male');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(9,'teju',90,'bankok',924252408,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(10,'yash',10,'banglore',923252408,'male');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(11,'sagarika',71,'thailand',9232524008,'female');
+ERROR 1264 (22003): Out of range value for column 'mobile_no' at row 1
+mysql> insert into student values(12,'rika',72,'pune',9232524008,'female');
+ERROR 1264 (22003): Out of range value for column 'mobile_no' at row 1
+mysql> insert into student values(11,'sagarika',71,'thailand',92325240,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(12,'rika',72,'pune',92325208,'female');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(13,'vishwas',87,'hyderabad',923295208,'male');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show tables;
++---------------+
+| Tables_in_cvr |
++---------------+
+| student       |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+-------+-----------+-----------+--------+
+| sno  | sname    | marks | city      | mobile_no | gender |
++------+----------+-------+-----------+-----------+--------+
+|    1 | navya    |    90 | hyderabad | 900765234 | female |
+|    2 | piyush   |    70 | vikarabad | 900762314 | male   |
+|    3 | aayush   |    99 | hyderabad | 900762897 | male   |
+|    4 | prakriti |    85 | mumbai    | 900767647 | female |
+|    5 | ruchi    |   100 | hyderabad | 900789227 | female |
+|    6 | sahiti   |    99 | delhi     | 900789217 | others |
+|    7 | vani     |    91 | mizoram   | 900788908 | female |
+|    8 | bhavani  |    62 | pune      | 900988908 | male   |
+|    9 | teju     |    90 | bankok    | 924252408 | female |
+|   10 | yash     |    10 | banglore  | 923252408 | male   |
+|   11 | sagarika |    71 | thailand  |  92325240 | female |
+|   12 | rika     |    72 | pune      |  92325208 | female |
+|   13 | vishwas  |    87 | hyderabad | 923295208 | male   |
++------+----------+-------+-----------+-----------+--------+
+13 rows in set (0.00 sec)
+
+mysql> select * from student where city='pune';
++------+---------+-------+------+-----------+--------+
+| sno  | sname   | marks | city | mobile_no | gender |
++------+---------+-------+------+-----------+--------+
+|    8 | bhavani |    62 | pune | 900988908 | male   |
+|   12 | rika    |    72 | pune |  92325208 | female |
++------+---------+-------+------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where city='pune'
+    -> intersection
+    -> select * from student where city='hyderabad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'intersection
+select * from student where city='hyderabad'' at line 2
+mysql> select * from student where city='pune'
+    -> and
+    -> select * from student where city='hyderabad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from student where city='hyderabad'' at line 3
+mysql> insert into student values(12,'rika',72,'pune',9232524008,'female');
+ERROR 1264 (22003): Out of range value for column 'mobile_no' at row 1
+mysql> select * from student where city ='pune' and select * from student where city='hyderabad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from student where city='hyderabad'' at line 1
+mysql> select * from student where city ='pune' or select * from student where city='hyderabad';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select * from student where city='hyderabad'' at line 1
+mysql> select * from student where city='hyderabad' or city='pune';
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|    3 | aayush  |    99 | hyderabad | 900762897 | male   |
+|    5 | ruchi   |   100 | hyderabad | 900789227 | female |
+|    8 | bhavani |    62 | pune      | 900988908 | male   |
+|   12 | rika    |    72 | pune      |  92325208 | female |
+|   13 | vishwas |    87 | hyderabad | 923295208 | male   |
++------+---------+-------+-----------+-----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and gender='male'
+    -> union
+    -> select ^Z
+    -> ^Z
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> select * from student where city='hyderabad' and gender='female'
+    -> union
+    -> select * from student where city='pune' and gender='male'
+    -> union
+    -> select * from students where city='banglore';
+ERROR 1146 (42S02): Table 'cvr.students' doesn't exist
+mysql> select * from student where city='pune' and gender='male'
+    -> union
+    -> select * from student where city='hyderabad' and gender='female'
+    -> ;
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    8 | bhavani |    62 | pune      | 900988908 | male   |
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|    5 | ruchi   |   100 | hyderabad | 900789227 | female |
++------+---------+-------+-----------+-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and gender='female'
+    -> union
+    -> select * from student where city='pune' and gender='male'
+    -> union
+    -> select * from student where city='banglore';
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|    5 | ruchi   |   100 | hyderabad | 900789227 | female |
+|    8 | bhavani |    62 | pune      | 900988908 | male   |
+|   10 | yash    |    10 | banglore  | 923252408 | male   |
++------+---------+-------+-----------+-----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and gender='male' and marks>70;
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    3 | aayush  |    99 | hyderabad | 900762897 | male   |
+|   13 | vishwas |    87 | hyderabad | 923295208 | male   |
++------+---------+-------+-----------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and gender='male' and marks>70 union select * from hyderabad where gender='female' and marks>50 union select * from student where city='pune' and gender='male';
+ERROR 1146 (42S02): Table 'cvr.hyderabad' doesn't exist
+mysql> select * from student where city='hyderabad' and gender='male' and marks>70 union select * from student where city='hyderabad'and gender='female' and marks>50 union select * from student where city='pune' and gender='male';
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    3 | aayush  |    99 | hyderabad | 900762897 | male   |
+|   13 | vishwas |    87 | hyderabad | 923295208 | male   |
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|    5 | ruchi   |   100 | hyderabad | 900789227 | female |
+|    8 | bhavani |    62 | pune      | 900988908 | male   |
++------+---------+-------+-----------+-----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where 80>=marks>=50 and city='hyderabad'or city='banglore';
++------+-------+-------+----------+-----------+--------+
+| sno  | sname | marks | city     | mobile_no | gender |
++------+-------+-------+----------+-----------+--------+
+|   10 | yash  |    10 | banglore | 923252408 | male   |
++------+-------+-------+----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where sname like s%a;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%a' at line 1
+mysql> select * from student where sname like %s%a;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%s%a' at line 1
+mysql> select * from student where sname like '%s%a';
++------+----------+-------+----------+-----------+--------+
+| sno  | sname    | marks | city     | mobile_no | gender |
++------+----------+-------+----------+-----------+--------+
+|   11 | sagarika |    71 | thailand |  92325240 | female |
++------+----------+-------+----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where sname like '%s%a%';
++------+----------+-------+-----------+-----------+--------+
+| sno  | sname    | marks | city      | mobile_no | gender |
++------+----------+-------+-----------+-----------+--------+
+|    6 | sahiti   |    99 | delhi     | 900789217 | others |
+|   11 | sagarika |    71 | thailand  |  92325240 | female |
+|   13 | vishwas  |    87 | hyderabad | 923295208 | male   |
++------+----------+-------+-----------+-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select count('hyderabad') from student;
++--------------------+
+| count('hyderabad') |
++--------------------+
+|                 13 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select count('pune') from student;
++---------------+
+| count('pune') |
++---------------+
+|            13 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select count('banglore') from student;
++-------------------+
+| count('banglore') |
++-------------------+
+|                13 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select city from student where max(marks);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select city from student
+    -> group by max(marks);
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select * from student where city='hyderabad'
+    -> order by max(marks);
++------+-------+-------+-----------+-----------+--------+
+| sno  | sname | marks | city      | mobile_no | gender |
++------+-------+-------+-----------+-----------+--------+
+|    1 | navya |    90 | hyderabad | 900765234 | female |
++------+-------+-------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT city
+    -> FROM student
+    -> WHERE marks = (SELECT MAX(marks) FROM student);
++-----------+
+| city      |
++-----------+
+| hyderabad |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where city='hyderabad' and marks=(select max(marks) from student);
++------+-------+-------+-----------+-----------+--------+
+| sno  | sname | marks | city      | mobile_no | gender |
++------+-------+-------+-----------+-----------+--------+
+|    5 | ruchi |   100 | hyderabad | 900789227 | female |
++------+-------+-------+-----------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> select city from student where (select avg(marks) from student)>95;
+Empty set (0.00 sec)
+
+mysql> SELECT city
+    -> FROM student
+    -> WHERE (SELECT AVG(marks) FROM student) > 95;
+Empty set (0.00 sec)
+
+mysql> WHERE (SELECT AVG(marks) FROM student) > 60;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE (SELECT AVG(marks) FROM student) > 60' at line 1
+mysql> SELECT city from student where(select avg(marks) from student)>70;
++-----------+
+| city      |
++-----------+
+| hyderabad |
+| vikarabad |
+| hyderabad |
+| mumbai    |
+| hyderabad |
+| delhi     |
+| mizoram   |
+| pune      |
+| bankok    |
+| banglore  |
+| thailand  |
+| pune      |
+| hyderabad |
++-----------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT city from student where(select avg(marks) from student)>80;
+Empty set (0.00 sec)
+
+mysql> SELECT city from student where(select avg(marks) from student)>75;
++-----------+
+| city      |
++-----------+
+| hyderabad |
+| vikarabad |
+| hyderabad |
+| mumbai    |
+| hyderabad |
+| delhi     |
+| mizoram   |
+| pune      |
+| bankok    |
+| banglore  |
+| thailand  |
+| pune      |
+| hyderabad |
++-----------+
+13 rows in set (0.00 sec)
+
+mysql> select max(marks) from student where city='hyderabad';
++------------+
+| max(marks) |
++------------+
+|        100 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks) from student where city='banglore';
++------------+
+| max(marks) |
++------------+
+|         10 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM student
+    -> WHERE marks BETWEEN 50 AND 80
+    ->   AND (city = 'Hyderabad' OR city = 'Bangalore');
+Empty set (0.00 sec)
+
+mysql> select * from student where marks>50 or marks<80 and city='hyderabad' or city='banglore';
++------+----------+-------+-----------+-----------+--------+
+| sno  | sname    | marks | city      | mobile_no | gender |
++------+----------+-------+-----------+-----------+--------+
+|    1 | navya    |    90 | hyderabad | 900765234 | female |
+|    2 | piyush   |    70 | vikarabad | 900762314 | male   |
+|    3 | aayush   |    99 | hyderabad | 900762897 | male   |
+|    4 | prakriti |    85 | mumbai    | 900767647 | female |
+|    5 | ruchi    |   100 | hyderabad | 900789227 | female |
+|    6 | sahiti   |    99 | delhi     | 900789217 | others |
+|    7 | vani     |    91 | mizoram   | 900788908 | female |
+|    8 | bhavani  |    62 | pune      | 900988908 | male   |
+|    9 | teju     |    90 | bankok    | 924252408 | female |
+|   10 | yash     |    10 | banglore  | 923252408 | male   |
+|   11 | sagarika |    71 | thailand  |  92325240 | female |
+|   12 | rika     |    72 | pune      |  92325208 | female |
+|   13 | vishwas  |    87 | hyderabad | 923295208 | male   |
++------+----------+-------+-----------+-----------+--------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM student
+    -> WHERE (marks > 50 OR marks < 80)
+    ->   AND (city = 'Hyderabad' OR city = 'Bangalore');
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|    3 | aayush  |    99 | hyderabad | 900762897 | male   |
+|    5 | ruchi   |   100 | hyderabad | 900789227 | female |
+|   13 | vishwas |    87 | hyderabad | 923295208 | male   |
++------+---------+-------+-----------+-----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM student
+    -> where(marks>50 and marks<80)
+    -> and(city='hyderabad' or city='banglore');
+Empty set (0.00 sec)
+
+mysql> select * from student where between 50 and 90 and city in('hyderabad','banglore');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'between 50 and 90 and city in('hyderabad','banglore')' at line 1
+mysql> select * from student where marks between 50 and 90 and city in('hyderabad','banglore');
++------+---------+-------+-----------+-----------+--------+
+| sno  | sname   | marks | city      | mobile_no | gender |
++------+---------+-------+-----------+-----------+--------+
+|    1 | navya   |    90 | hyderabad | 900765234 | female |
+|   13 | vishwas |    87 | hyderabad | 923295208 | male   |
++------+---------+-------+-----------+-----------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select count(*) from student
+    -> group by city;
++----------+
+| count(*) |
++----------+
+|        1 |
+|        1 |
+|        1 |
+|        4 |
+|        1 |
+|        1 |
+|        2 |
+|        1 |
+|        1 |
++----------+
+9 rows in set (0.00 sec)
+
+mysql> select count(city) from student
+    -> group by city;
++-------------+
+| count(city) |
++-------------+
+|           1 |
+|           1 |
+|           1 |
+|           4 |
+|           1 |
+|           1 |
+|           2 |
+|           1 |
+|           1 |
++-------------+
+9 rows in set (0.00 sec)
+
+mysql> select count(student) from student
+    -> group by city;
+ERROR 1054 (42S22): Unknown column 'student' in 'field list'
+mysql> select count(*) from student
+    -> select city,count(*)as students group by city;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select city,count(*)as students group by city' at line 2
+mysql> select city,count(*)as students group by city;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'group by city' at line 1
+mysql> select city,count(*)as students from student  group by city;
++-----------+----------+
+| city      | students |
++-----------+----------+
+| banglore  |        1 |
+| bankok    |        1 |
+| delhi     |        1 |
+| hyderabad |        4 |
+| mizoram   |        1 |
+| mumbai    |        1 |
+| pune      |        2 |
+| thailand  |        1 |
+| vikarabad |        1 |
++-----------+----------+
+9 rows in set (0.00 sec)
+
+mysql> select city,max(marks) as avg_marks from student group by city order by avg_score desc limit 1;
+ERROR 1054 (42S22): Unknown column 'avg_score' in 'order clause'
+mysql> select city,max(marks) as avg_marks from student group by city order by avg_marks desc limit 1;
++-----------+-----------+
+| city      | avg_marks |
++-----------+-----------+
+| hyderabad |       100 |
++-----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select city from student where marks=(select avg(marks) from students) order by marks desc limit 1;
+ERROR 1146 (42S02): Table 'cvr.students' doesn't exist
+mysql> select city from student where marks=(select avg(marks) from student) order by marks desc limit 1;
+Empty set (0.00 sec)
+
+mysql> select city,avg(marks) as "avg_score" from students group by city order by "avg_score" desc limit 1;
+ERROR 1146 (42S02): Table 'cvr.students' doesn't exist
+mysql> select city,avg(marks) as "avg_score" from student group by city order by "avg_score" desc limit 1;
++-----------+-----------+
+| city      | avg_score |
++-----------+-----------+
+| hyderabad |   94.0000 |
++-----------+-----------+
+1 row in set (0.00 sec)
+
+mysql> create database retail;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use retail;
+Database changed
+mysql> create table salespeople(snum int not null,sname varchar(30) not null,city varchar(30) not null, comm decimal(4,2,) not null, primary key(snum));;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') not null, primary key(snum))' at line 1
+ERROR:
+No query specified
+
+mysql> create table salespeople(snum int not null,sname varchar(30) not null,city varchar(30) not null, comm decimal(4,2) not null, primary key(snum));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> insert into salespeople values(1001,'peel','london',0.12);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into salespeople values(1002,'serres','san jose',0.13);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into salespeople values(1003,'axelroad','new york',0.10);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into salespeople values(1004,'motika','london',0.11);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into salespeople values(1005,'fran','london',0.26);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into salespeople values(1007,'rifkin','barcelona',0.15);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from salespeople;
++------+----------+-----------+------+
+| snum | sname    | city      | comm |
++------+----------+-----------+------+
+| 1001 | peel     | london    | 0.12 |
+| 1002 | serres   | san jose  | 0.13 |
+| 1003 | axelroad | new york  | 0.10 |
+| 1004 | motika   | london    | 0.11 |
+| 1005 | fran     | london    | 0.26 |
+| 1007 | rifkin   | barcelona | 0.15 |
++------+----------+-----------+------+
+6 rows in set (0.00 sec)
+
+mysql> create table customer(cnum int not null,cname varchar(30) not null,city varchar(30) not null,rating int not null,snum int not null, primary key(cnum),foreign key(snum) references salespeople(snum));
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into customer values(2002,'hoffman','london',100,1001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2002,'giovanni','rome',200,1003);
+ERROR 1062 (23000): Duplicate entry '2002' for key 'PRIMARY'
+mysql> update table customer set cnum=2001 where cname='hoffman';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table customer set cnum=2001 where cname='hoffman'' at line 1
+mysql> UPDATE customer
+    -> SET cnum = 2001
+    -> WHERE cname = 'hoffman';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from customer;
++------+---------+--------+--------+------+
+| cnum | cname   | city   | rating | snum |
++------+---------+--------+--------+------+
+| 2001 | hoffman | london |    100 | 1001 |
++------+---------+--------+--------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into customer values(2002,'giovanni','rome',200,1003);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2003,'liu','san jose',200,1002);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2004,'grass','berlin',300,1002);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2006,'clemens','london',100,1001);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2008,'cisnerios','san jose',300,1007);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into customer values(2007,'pereira','rome',100,1004);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from customer;
++------+-----------+----------+--------+------+
+| cnum | cname     | city     | rating | snum |
++------+-----------+----------+--------+------+
+| 2001 | hoffman   | london   |    100 | 1001 |
+| 2002 | giovanni  | rome     |    200 | 1003 |
+| 2003 | liu       | san jose |    200 | 1002 |
+| 2004 | grass     | berlin   |    300 | 1002 |
+| 2006 | clemens   | london   |    100 | 1001 |
+| 2007 | pereira   | rome     |    100 | 1004 |
+| 2008 | cisnerios | san jose |    300 | 1007 |
++------+-----------+----------+--------+------+
+7 rows in set (0.00 sec)
+
+mysql> select s.sname from s.salespeople where (select max(c.rating) from c.customer);
+ERROR 1146 (42S02): Table 's.salespeople' doesn't exist
+mysql> select count(cname)  as from c.customer,s.salespeople where s,snum=c.cnumomer)
+    -> ^Z
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'from c.customer,s.salespeople where s,snum=c.cnumomer)' at line 1
+mysql> select count(cname) as customers from salespeople left join customer on s.snum=c.cnum;
+ERROR 1054 (42S22): Unknown column 's.snum' in 'on clause'
+mysql> select s.name as sales_name,count(cname) as customers from salespeople s left join customer c on s.snum=c.cnum group by s.snum,s.name;
+ERROR 1054 (42S22): Unknown column 's.name' in 'field list'
+mysql> select s.name as sales_name,count(cname) as customers from salespeople s left join customer c on s.snum=c.cnum group by s.snum,s.sname;
+ERROR 1054 (42S22): Unknown column 's.name' in 'field list'
+mysql> select s.sname as sales_name,count(cname) as customers from salespeople s left join customer c on s.snum=c.cnum group by s.snum,s.sname;
++------------+-----------+
+| sales_name | customers |
++------------+-----------+
+| peel       |         0 |
+| serres     |         0 |
+| axelroad   |         0 |
+| motika     |         0 |
+| fran       |         0 |
+| rifkin     |         0 |
++------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select s.sname as sales_name,count(cname) as customers from salespeople s left join customer c on s.snum=c.snum group by s.snum,s.sname;
++------------+-----------+
+| sales_name | customers |
++------------+-----------+
+| peel       |         2 |
+| serres     |         2 |
+| axelroad   |         1 |
+| motika     |         1 |
+| fran       |         0 |
+| rifkin     |         1 |
++------------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select s.sname from salesperson s join select c.rating from customer c where s.sname=max(c.rating);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select c.rating from customer c where s.sname=max(c.rating)' at line 1
+mysql> select s.sname from salesperson s join on c.rating from customer c where s.sname=max(c.rating);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'on c.rating from customer c where s.sname=max(c.rating)' at line 1
+mysql> select s.sname as best_sales_person,max(rating) as cust_rate from salesperson s left join customer c on s.snum=c.snum group by s.sname,c.rating;
+ERROR 1146 (42S02): Table 'retail.salesperson' doesn't exist
+mysql> select s.sname as best_sales_person,max(rating) as cust_rate from salesperson s left join customer c on s.snum=c.snum group by s.sname,c.rating;
+ERROR 1146 (42S02): Table 'retail.salesperson' doesn't exist
+mysql> select s.sname as best_person,max(rating) as cust_rate from salespeople s left join customer c on s.snum=c.snum group by s,sname,c,sname,c.rating order by cust_rate desc limit 1;
+ERROR 1054 (42S22): Unknown column 's' in 'group statement'
+mysql>  select s.sname as best_person,max(rating) as cust_rate from salespeople s left join customer c on s.snum=c.snum group by s.sname,c.rating order by cust_rate desc limit 2;
++-------------+-----------+
+| best_person | cust_rate |
++-------------+-----------+
+| rifkin      |       300 |
+| serres      |       300 |
++-------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select .sname as worse_person,min(rating) as cust_rate from salespeople s left join customer c on s.snum=c.snum group by s.sname,c.rating order by cust_rate limit 1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as worse_person,min(rating) as cust_rate from salespeople s left join customer c' at line 1
+mysql> select s.sname as worse_person,min(rating) as cust_rate from salespeople s left join customer c on s.snum=c.snum group by s.sname,c.rating order by cust_rate limit 1;
++--------------+-----------+
+| worse_person | cust_rate |
++--------------+-----------+
+| fran         |      NULL |
++--------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select s.sname as people from salepeople s left join customer c on s.snum=c.snum group by c.city order by s.sname;
+ERROR 1146 (42S02): Table 'retail.salepeople' doesn't exist
+mysql> select s.sname as people from salespeople s left join customer c on s.snum=c.snum group by c.city order by s.sname;
++----------+
+| people   |
++----------+
+| axelroad |
+| fran     |
+| peel     |
+| serres   |
+| serres   |
++----------+
+5 rows in set (0.00 sec)
+
+mysql>
